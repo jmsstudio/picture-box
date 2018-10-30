@@ -1,0 +1,3 @@
+rootProject.name = 'picturebox'
+
+include ':app'
