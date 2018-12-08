@@ -1,21 +1,28 @@
 import React from 'react';
 import { FlatList, StyleSheet } from 'react-native';
-import Post from './components/Post';
+import Post from './component/Post';
+import PostService from './service/PostService';
 
 export default class App extends React.Component {
-  render() {
-    const data = [
-      { id: 1, user: 'john.armless' },
-      { id: 2, user: 'mary.christmas' },
-      { id: 3, user: 'james.bond' },
-      { id: 4, user: 'john.doe' },
-    ];
+  constructor(props) {
+    super(props);
+    this.state = {
+      pictures: [],
+    };
+  }
 
+  componentDidMount() {
+    PostService.listPictures()
+      .then(response => this.setState({ pictures: response.data }))
+      .catch(err => alert(err));
+  }
+
+  render() {
     return (
       <>
         <FlatList
           style={styles.container}
-          data={data}
+          data={this.state.pictures}
           keyExtractor={item => `${item.id}`}
           renderItem={({ item }) => <Post item={item} />}
         />

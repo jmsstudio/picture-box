@@ -5,10 +5,10 @@ function Post({ item }) {
   return (
     <View key={item.id}>
       <View style={styles.header}>
-        <Image source={require(`../../resources/images/img3.jpg`)} style={styles.profileImage} />
-        <Text style={styles.userName}>{item.user}</Text>
+        <Image source={{ uri: item.user_avatar_url }} style={styles.profileImage} />
+        <Text style={styles.userName}>{item.username}</Text>
       </View>
-      <Image source={require(`../../resources/images/img1.png`)} style={styles.post} />
+      <Image source={{ uri: item.photo_url }} style={styles.post} />
     </View>
   );
 }
@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#ddd',
+    marginTop: 5,
   },
   profileImage: {
     width: 40,
