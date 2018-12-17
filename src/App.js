@@ -24,7 +24,7 @@ export default class App extends React.Component {
           style={styles.container}
           data={this.state.pictures}
           keyExtractor={item => `${item.id}`}
-          renderItem={({ item }) => <Post item={item} />}
+          renderItem={({ item }) => <Post post={item} />}
         />
       </>
     );
