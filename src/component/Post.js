@@ -27,7 +27,18 @@ class Post extends React.Component {
           <TouchableOpacity onPress={() => this.like()}>
             <Image source={this._loadLikeIcon(this.state.liked)} style={styles.likeButton} />
           </TouchableOpacity>
+          {this.state.likers.length > 0 ? (
+            <Text style={styles.likes}>
+              {this.state.likers.length} {this.state.likers.length > 1 ? 'likes' : 'like'}
+            </Text>
+          ) : null}
         </View>
+        {this.state.comments.map((comment, idx) => (
+          <View style={styles.comments} key={idx}>
+            <Text style={styles.commentTitle}>{comment.author}</Text>
+            <Text>{comment.comment}</Text>
+          </View>
+        ))}
       </View>
     );
   }
@@ -62,6 +73,16 @@ const styles = StyleSheet.create({
   likeButton: {
     width: 40,
     height: 40,
+  },
+  likes: {
+    fontWeight: 'bold',
+  },
+  comments: {
+    flexDirection: 'row',
+  },
+  commentTitle: {
+    fontWeight: 'bold',
+    marginRight: 5,
   },
 });
 
