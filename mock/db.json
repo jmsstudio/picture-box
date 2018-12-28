@@ -6,7 +6,6 @@
       "username": "John Armless",
       "user_avatar_url": "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male-512.png",
       "photo_url": "https://burst.shopifycdn.com/photos/woman-wades-in-ocean-at-sunset_925x.progressive.jpg",
-      "liked": true,
       "likers": ["john.armless", "test", "user01"],
       "comments": []
     },
@@ -16,7 +15,6 @@
       "username": "Mary Christmas",
       "user_avatar_url": "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_female-512.png",
       "photo_url": "https://burst.shopifycdn.com/photos/stone-sculptures-on-beach_925x.progressive.jpg",
-      "liked": false,
       "likers": [],
       "comments": [
         {

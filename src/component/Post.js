@@ -11,11 +11,24 @@ class Post extends React.Component {
     return isLiked ? require('../../resources/like-checked.png') : require('../../resources/like-o.png');
   }
 
-  like() {
-    this.setState({ ...this.state, liked: !this.state.liked });
+  like(user) {
+    const { likers } = this.state;
+    let updatedLikersList = [];
+    if (likers.includes(user)) {
+      updatedLikersList = likers.filter(liker => liker != user);
+    } else {
+      updatedLikersList = [...likers, user];
+    }
+    this.setState({ likers: updatedLikersList });
+  }
+
+  isLiked(user) {
+    return (this.state.likers || []).includes(user);
   }
 
   render() {
+    const currentUser = 'user01';
+
     return (
       <View key={this.state.id}>
         <View style={styles.header}>
@@ -24,8 +37,8 @@ class Post extends React.Component {
         </View>
         <Image source={{ uri: this.state.photo_url }} style={styles.post} />
         <View style={styles.footer}>
-          <TouchableOpacity onPress={() => this.like()}>
-            <Image source={this._loadLikeIcon(this.state.liked)} style={styles.likeButton} />
+          <TouchableOpacity onPress={() => this.like(currentUser)}>
+            <Image source={this._loadLikeIcon(this.isLiked(currentUser))} style={styles.likeButton} />
           </TouchableOpacity>
           {this.state.likers.length > 0 ? (
             <Text style={styles.likes}>
