@@ -1,10 +1,14 @@
 import React from 'react';
-import { View, Image, Text, Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, Text, Dimensions, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 
 class Post extends React.Component {
   constructor(props) {
     super(props);
-    this.state = props.post;
+    this.state = { ...props.post, commentMessage: '' };
+  }
+
+  save(data) {
+    this.props.onSave(data);
   }
 
   _loadLikeIcon(isLiked) {
@@ -20,10 +24,26 @@ class Post extends React.Component {
       updatedLikersList = [...likers, user];
     }
     this.setState({ likers: updatedLikersList });
+
+    this.save({ ...this.state, likers: updatedLikersList });
   }
 
   isLiked(user) {
     return (this.state.likers || []).includes(user);
+  }
+
+  addComment(user) {
+    if (this.state.commentMessage) {
+      const newComment = {
+        author: user,
+        comment: this.state.commentMessage,
+      };
+
+      this.setState({ comments: [...this.state.comments, newComment] });
+
+      this.save({ ...this.state, comments: [...this.state.comments, newComment] });
+    }
+    this.setState({ commentMessage: '' });
   }
 
   render() {
@@ -52,6 +72,19 @@ class Post extends React.Component {
             <Text>{comment.comment}</Text>
           </View>
         ))}
+
+        <View style={styles.newComment}>
+          <TextInput
+            style={styles.commentInput}
+            placeholder="Type a comment..."
+            value={this.state.commentMessage}
+            onSubmitEditing={() => this.addComment(currentUser)}
+            onChangeText={text => this.setState({ commentMessage: text })}
+          />
+          <TouchableOpacity onPress={() => this.addComment(currentUser)}>
+            <Image source={require('../../resources/send.png')} style={styles.sendButton} />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -81,7 +114,6 @@ const styles = StyleSheet.create({
   },
   footer: {
     margin: 5,
-    alignItems: 'flex-end',
   },
   likeButton: {
     width: 40,
@@ -89,13 +121,33 @@ const styles = StyleSheet.create({
   },
   likes: {
     fontWeight: 'bold',
+    marginLeft: 5,
   },
   comments: {
     flexDirection: 'row',
+    margin: 5,
+    padding: 5,
   },
   commentTitle: {
     fontWeight: 'bold',
     marginRight: 5,
+  },
+  newComment: {
+    flexDirection: 'row',
+    marginTop: 10,
+    marginBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+    marginLeft: 5,
+    marginRight: 5,
+    alignItems: 'center',
+  },
+  commentInput: {
+    flex: 1,
+  },
+  sendButton: {
+    width: 30,
+    height: 30,
   },
 });
 

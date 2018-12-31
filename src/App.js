@@ -17,6 +17,10 @@ export default class App extends React.Component {
       .catch(err => alert(err));
   }
 
+  onSave(data) {
+    PostService.update(data.id, data).catch(err => console.warn(err));
+  }
+
   render() {
     return (
       <>
@@ -24,7 +28,7 @@ export default class App extends React.Component {
           style={styles.container}
           data={this.state.pictures}
           keyExtractor={item => `${item.id}`}
-          renderItem={({ item }) => <Post post={item} />}
+          renderItem={({ item }) => <Post post={item} onSave={this.onSave} />}
         />
       </>
     );
